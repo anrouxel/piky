@@ -7,4 +7,5 @@ authors = ["Antonin Rouxel"]
 [dependencies]
 clap = { version = "4.6.1", features = ["derive", "cargo", "env", "unicode"] }
 git2 = "0.20.4"
+serde = { version = "1.0.228", features = ["derive"] }
 toml = "1.1.2"
