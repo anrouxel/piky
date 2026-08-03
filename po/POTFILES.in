@@ -1,0 +1,3 @@
+data/eu.anrouxel.piky.desktop.in.in
+src/application.rs
+src/window.rs

@@ -1,0 +1,41 @@
+# French translations for piky package.
+# Copyright (C) 2026 THE piky'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the piky package.
+# Automatically generated, 2026.
+# Antonin Rouxel <>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: piky\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 23:11+0200\n"
+"PO-Revision-Date: 2026-08-03 23:12+0200\n"
+"Last-Translator: Antonin Rouxel <>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 50.0\n"
+
+#: data/eu.anrouxel.piky.desktop.in.in:2 src/application.rs:103
+#: src/window.rs:73
+msgid "Piky"
+msgstr "Piky"
+
+#: data/eu.anrouxel.piky.desktop.in.in:3
+msgid "Mermaid diagram editor"
+msgstr "Éditeur de diagrammes Mermaid"
+
+#: data/eu.anrouxel.piky.desktop.in.in:4
+msgid "Diagram Editor"
+msgstr "Éditeur de diagrammes"
+
+#: data/eu.anrouxel.piky.desktop.in.in:11
+msgid "UML;diagram;mermaid;modeling;"
+msgstr "UML;diagramme;mermaid;modélisation;"
+
+#: src/application.rs:106
+msgid "translator-credits"
+msgstr "Antonin Rouxel"
