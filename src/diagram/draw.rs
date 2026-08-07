@@ -64,7 +64,13 @@ fn build_smooth_path(points: &[LayoutPoint]) -> gsk::Path {
         builder.line_to(points[1].x as f32, points[1].y as f32);
         return builder.to_path();
     }
-    for pair in points[1..].windows(2) {
+    // Every point up to (but excluding) the last two becomes a control point
+    // ending at the midpoint to its successor; the final `quad_to` below
+    // handles the last segment. Excluding the final pair here is required —
+    // including it would use the second-to-last point as a control point
+    // twice (once for the midpoint, once again below), producing a spurious
+    // loop/spike right before the curve's true endpoint.
+    for pair in points[1..points.len() - 1].windows(2) {
         let cur = &pair[0];
         let next = &pair[1];
         let mid_x = ((cur.x + next.x) / 2.0) as f32;
