@@ -1804,6 +1804,7 @@ dependencies = [
  "libadwaita",
  "merman-core",
  "merman-render",
+ "serde_json",
  "tracing",
  "tracing-subscriber",
 ]
