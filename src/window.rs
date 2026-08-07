@@ -6,7 +6,7 @@ use tracing::debug;
 
 use crate::application::PikyApplication;
 use crate::config::app_id;
-use crate::diagram_view::log_flowchart_layout;
+use crate::diagram_view::{log_flowchart_layout, log_flowchart_shapes};
 
 const DEMO_DIAGRAM: &str = r#"
 flowchart TD
@@ -80,6 +80,7 @@ impl PikyApplicationWindow {
         toolbar_view.add_top_bar(&header_bar);
 
         log_flowchart_layout(DEMO_DIAGRAM);
+        log_flowchart_shapes(DEMO_DIAGRAM);
 
         self.set_title(Some(&gettext("Piky")));
         self.set_content(Some(&toolbar_view));
