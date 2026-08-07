@@ -34,7 +34,11 @@ const NODE_PAD_X: f64 = 8.0;
 const ROW_MIN_H: f64 = 14.0;
 const MARKER_LEN: f64 = 14.0;
 const MARKER_HALF_W: f64 = 6.0;
-const LABEL_FONT_SCALE: f64 = 0.85;
+/// Matches Mermaid's `.edgeTerminals{font-size:11px}` rule for multiplicity/
+/// role labels near relation endpoints (e.g. "1", "*"). The main relation
+/// title ("uses", "depends on", ...) has no such override and renders at the
+/// diagram's normal text size.
+const EDGE_TERMINAL_FONT_SIZE: f64 = 11.0;
 
 pub struct ClassDiagramScene {
     model: ClassDiagram,
@@ -503,34 +507,48 @@ impl ClassDiagramScene {
         }
 
         if let Some(label) = &edge.label
-            && !relation.title.trim().is_empty() {
-                self.draw_small_text(snapshot, pango_ctx, &relation.title, label.x, label.y, theme);
-            }
+            && !relation.title.trim().is_empty()
+        {
+            self.draw_edge_text(
+                snapshot,
+                pango_ctx,
+                &relation.title,
+                label.x,
+                label.y,
+                theme,
+                self.text_style.font_size,
+            );
+        }
         if relation.relation_title_1 != "none"
-            && let Some(label) = edge.start_label_left.as_ref().or(edge.start_label_right.as_ref()) {
-                self.draw_small_text(
-                    snapshot,
-                    pango_ctx,
-                    &relation.relation_title_1,
-                    label.x,
-                    label.y,
-                    theme,
-                );
-            }
+            && let Some(label) = edge.start_label_left.as_ref().or(edge.start_label_right.as_ref())
+        {
+            self.draw_edge_text(
+                snapshot,
+                pango_ctx,
+                &relation.relation_title_1,
+                label.x,
+                label.y,
+                theme,
+                EDGE_TERMINAL_FONT_SIZE,
+            );
+        }
         if relation.relation_title_2 != "none"
-            && let Some(label) = edge.end_label_left.as_ref().or(edge.end_label_right.as_ref()) {
-                self.draw_small_text(
-                    snapshot,
-                    pango_ctx,
-                    &relation.relation_title_2,
-                    label.x,
-                    label.y,
-                    theme,
-                );
-            }
+            && let Some(label) = edge.end_label_left.as_ref().or(edge.end_label_right.as_ref())
+        {
+            self.draw_edge_text(
+                snapshot,
+                pango_ctx,
+                &relation.relation_title_2,
+                label.x,
+                label.y,
+                theme,
+                EDGE_TERMINAL_FONT_SIZE,
+            );
+        }
     }
 
-    fn draw_small_text(
+    #[allow(clippy::too_many_arguments)]
+    fn draw_edge_text(
         &self,
         snapshot: &gtk::Snapshot,
         pango_ctx: &pango::Context,
@@ -538,13 +556,14 @@ impl ClassDiagramScene {
         x: f64,
         y: f64,
         theme: &Theme,
+        font_size: f64,
     ) {
         let layout = pango::Layout::new(pango_ctx);
         let mut desc = pango::FontDescription::new();
         if let Some(family) = &self.text_style.font_family {
             desc.set_family(family);
         }
-        desc.set_absolute_size(self.text_style.font_size * LABEL_FONT_SCALE * f64::from(pango::SCALE));
+        desc.set_absolute_size(font_size * f64::from(pango::SCALE));
         layout.set_font_description(Some(&desc));
         layout.set_text(text);
         let (w, h) = layout.pixel_size();
@@ -586,15 +605,12 @@ impl ClassDiagramScene {
                 stroke_polygon(snapshot, &points, &theme.node_stroke, 1.0);
             }
             MarkerKind::Dependency => {
+                // A solid filled arrowhead (Mermaid's `.dependency` marker is filled,
+                // unlike `.extension`/`.aggregation` which are hollow).
                 let a = add(tip, add(scale(dir, MARKER_LEN), scale(perp, MARKER_HALF_W)));
                 let b = add(tip, sub(scale(dir, MARKER_LEN), scale(perp, MARKER_HALF_W)));
-                let builder = gsk::PathBuilder::new();
-                builder.move_to(a.0 as f32, a.1 as f32);
-                builder.line_to(tip.0 as f32, tip.1 as f32);
-                builder.line_to(b.0 as f32, b.1 as f32);
-                let path = builder.to_path();
-                let stroke = gsk::Stroke::new(1.0);
-                snapshot.append_stroke(&path, &stroke, &theme.edge_stroke);
+                let points = [tip, a, b];
+                fill_polygon(snapshot, &points, &theme.edge_stroke);
             }
             MarkerKind::Lollipop => {
                 let center = add(tip, scale(dir, MARKER_HALF_W));
