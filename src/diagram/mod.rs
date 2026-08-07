@@ -7,6 +7,8 @@
 //! implementation under this module, following the `class` module as a template.
 
 pub mod class;
+mod draw;
+mod geom;
 pub mod theme;
 
 use merman_core::diagram::RenderSemanticModel;
