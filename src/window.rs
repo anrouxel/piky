@@ -6,6 +6,7 @@ use tracing::debug;
 
 use crate::application::PikyApplication;
 use crate::config::app_id;
+use crate::editor::PikyEditor;
 
 mod imp {
     use super::*;
@@ -69,6 +70,7 @@ impl PikyApplicationWindow {
 
         let toolbar_view = adw::ToolbarView::new();
         toolbar_view.add_top_bar(&header_bar);
+        toolbar_view.set_content(Some(&PikyEditor::new()));
 
         self.set_title(Some(&gettext("Piky")));
         self.set_content(Some(&toolbar_view));

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ This file is part of Piky.
+
+ Piky is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ Piky is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License
+ along with this library; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+<language id="mermaid" name="Mermaid" version="2.0" _section="Other">
+  <metadata>
+    <property name="mimetypes">text/vnd.mermaid</property>
+    <property name="globs">*.mmd;*.mermaid</property>
+    <property name="line-comment-start">%%</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" name="Comment" map-to="def:comment"/>
+    <style id="string" name="String" map-to="def:string"/>
+    <style id="diagram-type" name="Diagram Type" map-to="def:keyword"/>
+    <style id="keyword" name="Keyword" map-to="def:keyword"/>
+    <style id="direction" name="Direction" map-to="def:type"/>
+    <style id="arrow" name="Arrow" map-to="def:operator"/>
+    <style id="number" name="Number" map-to="def:number"/>
+  </styles>
+
+  <definitions>
+
+    <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>%%</start>
+      <include>
+        <context ref="def:in-line-comment"/>
+      </include>
+    </context>
+
+    <context id="string" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <context ref="def:escape"/>
+        <context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="diagram-types" style-ref="diagram-type">
+      <prefix>^\s*</prefix>
+      <keyword>flowchart</keyword>
+      <keyword>graph</keyword>
+      <keyword>sequenceDiagram</keyword>
+      <keyword>classDiagram</keyword>
+      <keyword>classDiagram-v2</keyword>
+      <keyword>stateDiagram</keyword>
+      <keyword>stateDiagram-v2</keyword>
+      <keyword>erDiagram</keyword>
+      <keyword>journey</keyword>
+      <keyword>gantt</keyword>
+      <keyword>pie</keyword>
+      <keyword>quadrantChart</keyword>
+      <keyword>requirementDiagram</keyword>
+      <keyword>gitGraph</keyword>
+      <keyword>gitGraph:</keyword>
+      <keyword>mindmap</keyword>
+      <keyword>timeline</keyword>
+      <keyword>sankey-beta</keyword>
+      <keyword>C4Context</keyword>
+      <keyword>C4Container</keyword>
+      <keyword>C4Component</keyword>
+      <keyword>C4Dynamic</keyword>
+      <keyword>C4Deployment</keyword>
+      <keyword>block-beta</keyword>
+      <keyword>packet-beta</keyword>
+      <keyword>xychart-beta</keyword>
+      <keyword>architecture-beta</keyword>
+      <keyword>kanban</keyword>
+    </context>
+
+    <context id="directions" style-ref="direction">
+      <keyword>direction</keyword>
+      <keyword>TB</keyword>
+      <keyword>TD</keyword>
+      <keyword>BT</keyword>
+      <keyword>RL</keyword>
+      <keyword>LR</keyword>
+    </context>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>subgraph</keyword>
+      <keyword>end</keyword>
+      <keyword>participant</keyword>
+      <keyword>actor</keyword>
+      <keyword>activate</keyword>
+      <keyword>deactivate</keyword>
+      <keyword>class</keyword>
+      <keyword>classDef</keyword>
+      <keyword>style</keyword>
+      <keyword>linkStyle</keyword>
+      <keyword>click</keyword>
+      <keyword>link</keyword>
+      <keyword>callback</keyword>
+      <keyword>interpolate</keyword>
+      <keyword>loop</keyword>
+      <keyword>alt</keyword>
+      <keyword>else</keyword>
+      <keyword>opt</keyword>
+      <keyword>par</keyword>
+      <keyword>and</keyword>
+      <keyword>rect</keyword>
+      <keyword>note</keyword>
+      <keyword>over</keyword>
+      <keyword>left</keyword>
+      <keyword>right</keyword>
+      <keyword>of</keyword>
+      <keyword>autonumber</keyword>
+      <keyword>title</keyword>
+      <keyword>section</keyword>
+      <keyword>state</keyword>
+      <keyword>choice</keyword>
+      <keyword>fork</keyword>
+      <keyword>join</keyword>
+      <keyword>enum</keyword>
+      <keyword>namespace</keyword>
+      <keyword>accTitle</keyword>
+      <keyword>accDescr</keyword>
+      <keyword>dateFormat</keyword>
+      <keyword>axisFormat</keyword>
+      <keyword>excludes</keyword>
+      <keyword>todayMarker</keyword>
+    </context>
+
+    <context id="arrows" style-ref="arrow">
+      <match>(&lt;\||\*|o|x)?[-=.]{2,}(&gt;|\||\*|o|x)?</match>
+    </context>
+
+    <context id="numbers" style-ref="number">
+      <match>\b[0-9]+(\.[0-9]+)?\b</match>
+    </context>
+
+    <context id="mermaid" class="no-spell-check">
+      <include>
+        <context ref="line-comment"/>
+        <context ref="string"/>
+        <context ref="diagram-types"/>
+        <context ref="directions"/>
+        <context ref="keywords"/>
+        <context ref="arrows"/>
+        <context ref="numbers"/>
+      </include>
+    </context>
+
+  </definitions>
+
+</language>

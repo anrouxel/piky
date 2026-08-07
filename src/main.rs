@@ -1,6 +1,9 @@
 mod application;
 mod config;
+mod editor;
 mod i18n;
+mod mermaid_completion;
+mod mermaid_proposal;
 mod window;
 
 use gtk::{gio, glib};
