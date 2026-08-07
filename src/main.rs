@@ -1,5 +1,6 @@
 mod application;
 mod config;
+mod diagram_view;
 mod i18n;
 mod window;
 
