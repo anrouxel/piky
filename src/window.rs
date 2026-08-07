@@ -6,7 +6,7 @@ use tracing::debug;
 
 use crate::application::PikyApplication;
 use crate::config::app_id;
-use crate::diagram_view::{DiagramView, layout_flowchart_json};
+use crate::diagram_view::log_flowchart_layout;
 
 const DEMO_DIAGRAM: &str = r#"
 flowchart TD
@@ -79,17 +79,7 @@ impl PikyApplicationWindow {
         let toolbar_view = adw::ToolbarView::new();
         toolbar_view.add_top_bar(&header_bar);
 
-        let diagram_view = DiagramView::new();
-        match layout_flowchart_json(DEMO_DIAGRAM) {
-            Ok(layout) => {
-                debug!("Layout JSON: {:#}", layout);
-                diagram_view.set_layout_json(layout);
-            }
-            Err(err) => tracing::error!("Failed to compute diagram layout: {}", err),
-        }
-
-        let scrolled_window = gtk::ScrolledWindow::builder().child(&diagram_view).build();
-        toolbar_view.set_content(Some(&scrolled_window));
+        log_flowchart_layout(DEMO_DIAGRAM);
 
         self.set_title(Some(&gettext("Piky")));
         self.set_content(Some(&toolbar_view));
