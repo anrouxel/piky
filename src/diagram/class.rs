@@ -348,7 +348,7 @@ impl ClassDiagramScene {
         let (l, t, r, b) = cluster_rect(cluster);
         let rect = graphene::Rect::new(l as f32, t as f32, cluster.width as f32, cluster.height as f32);
         fill_rect(snapshot, &rect, &theme.cluster_fill);
-        stroke_rect(snapshot, &rect, &theme.cluster_stroke, 1.0, Some(&[6.0, 4.0]));
+        stroke_rect(snapshot, &rect, &theme.cluster_stroke, 1.0, None);
 
         if !cluster.title.trim().is_empty() {
             self.draw_text(
@@ -474,8 +474,8 @@ impl ClassDiagramScene {
         relation: &ClassRelation,
     ) {
         let dashed = relation.relation.line_type == self.model.constants.line_type.dotted_line;
-        let dash: Option<&[f32]> = if dashed { Some(&[5.0, 4.0]) } else { None };
-        stroke_polyline(snapshot, &edge.points, &theme.edge_stroke, 1.5, dash);
+        let dash: Option<&[f32]> = if dashed { Some(&[2.0, 3.0]) } else { None };
+        stroke_polyline(snapshot, &edge.points, &theme.edge_stroke, 1.0, dash);
 
         if edge.points.len() >= 2 {
             let constants = &self.model.constants.relation_type;

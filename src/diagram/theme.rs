@@ -1,7 +1,10 @@
 use gtk::gdk;
 
-/// Flat color palette approximating Mermaid's default theme. Custom `classDef`
-/// styling and Mermaid "handDrawn" look are not applied yet.
+/// Flat color palette matching Mermaid's default theme values for class
+/// diagrams (`ClassDiagramTheme` defaults in `merman_render::svg::parity::theme`:
+/// `mainBkg` #ECECFF, `nodeBorder` #9370DB, `clusterBkg` #ffffde, `clusterBorder`
+/// #aaaa33, `lineColor`/`titleColor` #333). Custom `classDef` styling and
+/// Mermaid "handDrawn" look are not applied yet.
 #[derive(Debug, Clone)]
 pub struct Theme {
     pub background: gdk::RGBA,
@@ -28,10 +31,10 @@ impl Default for Theme {
             node_stroke: rgba(147, 112, 219),
             note_fill: rgba(255, 245, 173),
             note_stroke: rgba(170, 170, 51),
-            cluster_fill: gdk::RGBA::new(0.576, 0.439, 0.859, 0.05),
-            cluster_stroke: rgba(147, 112, 219),
+            cluster_fill: rgba(255, 255, 222),
+            cluster_stroke: rgba(170, 170, 51),
             edge_stroke: rgba(51, 51, 51),
-            text: rgba(19, 19, 19),
+            text: rgba(51, 51, 51),
             divider: rgba(147, 112, 219),
         }
     }
