@@ -1,5 +1,7 @@
 mod application;
+mod canvas;
 mod config;
+mod diagram;
 mod i18n;
 mod window;
 

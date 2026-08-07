@@ -10,5 +10,6 @@ gettext-rs = { version = "0.7.7", features = ["gettext-system"] }
 gtk = { version = "0.11.4", package = "gtk4", features = ["gnome_50"] }
 merman-core = "0.7.0"
 merman-render = "0.7.0"
+thiserror = "2.0.19"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
